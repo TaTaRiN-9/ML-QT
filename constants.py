@@ -1,4 +1,4 @@
-SIZE_L, SIZE_W = 450, 546
+SIZE_L, SIZE_W = 450, 625
 READ_ONLY = True
 TITLE = {'Заголовок': 'Title',
          'Заголовок 1': 'Heading 1',
