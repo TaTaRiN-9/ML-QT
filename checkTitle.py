@@ -7,7 +7,7 @@ def checkTitles(currentTitle, pathFile):
     currentTitle = TITLE[currentTitle]
     document = Document(pathFile)
     count = 1
-    text = ''
+    text = 'ЗАГОЛОВКИ.\n'
 
     for line in document.paragraphs:
         if line.style.name in TITLE.values():
