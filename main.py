@@ -1,7 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QPlainTextEdit, QVBoxLayout, QWidget, QMessageBox
 
-import checkIndent
 from ml import Ui_MainWindow
 from constants import READ_ONLY, TITLE
 from checkTitle import checkTitles
@@ -79,9 +78,14 @@ class MainWindow(QMainWindow):
             self.plain_text.setPlainText(text)
 
 
-app = QApplication(sys.argv)
+def main():
+    app = QApplication(sys.argv)
 
-window = MainWindow()
-window.show()
+    window = MainWindow()
+    window.show()
 
-app.exec()
+    app.exec()
+
+
+if __name__ == '__main__':
+    main()
