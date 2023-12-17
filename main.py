@@ -6,6 +6,7 @@ from constants import READ_ONLY, TITLE, SETTER
 from checkTitle import checkTitles
 from checkIndent import checkIndents
 from checkSetter import checkSetters
+from checkLineSpace import checkLineSpaces
 from docx import Document
 
 
@@ -27,6 +28,7 @@ class MainWindow(QMainWindow):
         self.ui.choiceTitle.activated.connect(self.choiceTitleActive)
         self.ui.pickAligment.activated.connect(self.choiceAlignActive)
         self.ui.enterIndent.textEdited.connect(self.changeIndentLabel)
+        self.ui.enterLineSpace.textEdited.connect(self.changeLineSpaceLabel)
 
         self.ui.choiceTitle.addItems(TITLE.keys())
         self.ui.pickAligment.addItems(SETTER.keys())
@@ -47,6 +49,9 @@ class MainWindow(QMainWindow):
 
     def changeIndentLabel(self, text):
         self.ui.enterIndentLabel.setText(text + ' см')
+
+    def changeLineSpaceLabel(self, text):
+        self.ui.enterLineSpaceLabel.setText(text + ' см')
 
     def choiceTitleActive(self, index):
         self.ui.titlePicked.setText(self.ui.choiceTitle.itemText(index))
@@ -86,6 +91,7 @@ class MainWindow(QMainWindow):
             document = Document(self.pathFile)
             text = checkIndents(self.ui.enterIndent.text(), document)
             text += checkSetters(self.currentAlign.text(), document)
+            text += checkLineSpaces(self.ui.enterLineSpace.text(), document)
             text += checkTitles(self.currentTitle.text(), document)
             document.save(self.pathFile)
             self.plain_text.setPlainText(text)
