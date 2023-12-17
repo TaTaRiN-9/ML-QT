@@ -2,9 +2,11 @@ import sys
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QPlainTextEdit, QVBoxLayout, QWidget, QMessageBox
 
 from ml import Ui_MainWindow
-from constants import READ_ONLY, TITLE
+from constants import READ_ONLY, TITLE, SETTER
 from checkTitle import checkTitles
 from checkIndent import checkIndents
+from checkSetter import checkSetters
+from docx import Document
 
 
 class MainWindow(QMainWindow):
@@ -16,16 +18,20 @@ class MainWindow(QMainWindow):
         # начальные значения
         self.pathFile = ''
         self.currentTitle = self.ui.titlePicked
+        self.currentAlign = self.ui.pickAlignmentLabel
         self.ui.filePicked.setText('Файл не выбран.')
 
         # события кнопок
         self.ui.pickFileButton.clicked.connect(self.pickFileButton_Clicked)
         self.ui.checkFile.clicked.connect(self.checkFile_Clicked)
         self.ui.choiceTitle.activated.connect(self.choiceTitleActive)
+        self.ui.pickAligment.activated.connect(self.choiceAlignActive)
         self.ui.enterIndent.textEdited.connect(self.changeIndentLabel)
 
         self.ui.choiceTitle.addItems(TITLE.keys())
+        self.ui.pickAligment.addItems(SETTER.keys())
         self.ui.titlePicked.setText(self.ui.choiceTitle.currentText())
+        self.ui.pickAlignmentLabel.setText(self.ui.pickAligment.currentText())
 
         self.plain_text = QPlainTextEdit()
         self.plain_text.setReadOnly(READ_ONLY)
@@ -45,6 +51,10 @@ class MainWindow(QMainWindow):
     def choiceTitleActive(self, index):
         self.ui.titlePicked.setText(self.ui.choiceTitle.itemText(index))
         self.currentTitle = self.ui.titlePicked
+
+    def choiceAlignActive(self, index):
+        self.ui.pickAlignmentLabel.setText(self.ui.pickAligment.itemText(index))
+        self.currentAlign = self.ui.pickAlignmentLabel
 
     def pickFileButton_Clicked(self):
         filename, filetype = QFileDialog.getOpenFileName(self,
@@ -73,8 +83,11 @@ class MainWindow(QMainWindow):
         else:
             if self.ui.enterIndent.text() == '':
                 self.ui.enterIndent.setText('0')
-            text = checkIndents(self.ui.enterIndent.text(), self.pathFile)
-            text += checkTitles(self.currentTitle.text(), self.pathFile)
+            document = Document(self.pathFile)
+            text = checkIndents(self.ui.enterIndent.text(), document)
+            text += checkSetters(self.currentAlign.text(), document)
+            text += checkTitles(self.currentTitle.text(), document)
+            document.save(self.pathFile)
             self.plain_text.setPlainText(text)
 
 

@@ -1,6 +1,6 @@
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
-SIZE_L, SIZE_W = 450, 625  # размеры окна
+SIZE_L, SIZE_W = 450, 670  # размеры окна
 READ_ONLY = True  # только чтение
 
 # Все возможные заголовки
@@ -18,8 +18,8 @@ CORRECTSEQUENCE = {"Содержание": 1,
                    "База данных mongodb": 5}
 
 # Выравнивание параграфов
-setter = {
-    "по ширине": WD_ALIGN_PARAGRAPH.JUSTIFY, "по левому краю": WD_ALIGN_PARAGRAPH.LEFT,
-    "по правому краю": WD_ALIGN_PARAGRAPH.RIGHT, "по центру": WD_ALIGN_PARAGRAPH.CENTER,
+SETTER = {
+    "по ширине": WD_ALIGN_PARAGRAPH.JUSTIFY, "по левому": WD_ALIGN_PARAGRAPH.LEFT,
+    "по правому": WD_ALIGN_PARAGRAPH.RIGHT, "по центру": WD_ALIGN_PARAGRAPH.CENTER,
     "по умолчанию": WD_ALIGN_PARAGRAPH is None
 }

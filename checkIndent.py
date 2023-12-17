@@ -2,8 +2,7 @@ from docx import Document
 from constants import TITLE
 
 
-def checkIndents(currentIndent, pathFile):
-    document = Document(pathFile)
+def checkIndents(currentIndent, document):
     paragraphs = document.paragraphs
     currentIndent = currentIndent.replace(',', '.')
     result = f'ОТСТУПЫ ПЕРВОЙ СТРОКИ АБЗАЦЕВ. ({currentIndent} см)\n'

@@ -2,10 +2,9 @@ from docx import Document
 from constants import CORRECTSEQUENCE, TITLE
 
 
-def checkTitles(currentTitle, pathFile):
+def checkTitles(currentTitle, document):
     titleOnRussia = currentTitle
     currentTitle = TITLE[currentTitle]
-    document = Document(pathFile)
     count = 1
     text = 'ЗАГОЛОВКИ.\n'
 
@@ -31,5 +30,4 @@ def checkTitles(currentTitle, pathFile):
                 text += '-----\n'
                 count += 1
 
-    document.save(pathFile)
     return text
